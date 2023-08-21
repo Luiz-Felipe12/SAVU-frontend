@@ -1,0 +1,67 @@
+/* recuperarSenha.css */
+
+/* Estilos do background cinza */
+.background-container {
+    background: #EDEDEE;
+    height: calc(100vh - 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilos do conteúdo (quadrado branco) */
+  .content-container {
+    background: white;
+    padding: 1rem;
+    width: 400px;
+    border-radius: 10%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: -8rem;
+  }
+  
+  /* Estilos do formulário */
+  .form-title {
+    color: #393C47;
+    font-size: 40px;
+    margin-bottom: 1rem;
+  }
+  
+  .form-description {
+    color: #393C47;
+    font-size: 16px;
+    margin-bottom: 1rem;
+  }
+  
+  /* Estilos do input de e-mail */
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  
+  .input-field {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background-color: #e9e9e9;
+    height: 2rem;
+    border-radius: 5%;
+    font-size: 16px;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Estilos do botão de enviar */
+  .button-enviar {
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 20px; /* Valor maior para tornar o botão mais arredondado */
+    padding: 0.5rem 2rem; /* Reduza o valor do padding para tornar o botão menor */
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px; /* Defina uma largura máxima para o botão */
+  }
+
+  
