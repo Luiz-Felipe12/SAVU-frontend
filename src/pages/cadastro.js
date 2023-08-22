@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import InputMask from 'react-input-mask';
 import './login.css';
 
 const CadastroScreen = () => {
@@ -13,6 +14,12 @@ const CadastroScreen = () => {
   const [tipoUsuario, setTipoUsuario] = useState('Professor');
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isSenhaValid, setIsSenhaValid] = useState(true);
+  const [isNomeValid, setIsNomeValid] = useState(true);
+  const [isCpfValid, setIsCpfValid] = useState(true);
+  const [isWhatsappValid, setIsWhatsappValid] = useState(true);
 
   const eyeIconStyle = {
     position: 'absolute',
@@ -31,23 +38,33 @@ const CadastroScreen = () => {
   };
 
   const handleNomeChange = (e) => {
-    setNome(e.target.value);
+    const value = e.target.value;
+    setNome(value);
+    setIsNomeValid(value.length >= 4);
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    const value = e.target.value;
+    setEmail(value);
+    setIsEmailValid(validateEmail(value));
   };
 
   const handleCpfChange = (e) => {
-    setCpf(e.target.value);
+    const value = e.target.value;
+    setCpf(value);
+    setIsCpfValid(validateCpf(value));
   };
 
   const handleWhatsappChange = (e) => {
-    setWhatsapp(e.target.value);
+    const inputValue = e.target.value;
+    setWhatsapp(inputValue);
+    setIsWhatsappValid(validateWhatsapp(inputValue));
   };
 
   const handleSenhaChange = (e) => {
-    setSenha(e.target.value);
+    const value = e.target.value;
+    setSenha(value);
+    setIsSenhaValid(value.length >= 6);
   };
 
   const handleConfirmarSenhaChange = (e) => {
@@ -69,6 +86,21 @@ const CadastroScreen = () => {
     console.log('Tipo de Usuário:', tipoUsuario);
   };
 
+  const validateWhatsapp = (input) => {
+    const phonePattern = /^\(\d{2}\)\s\d{5}-\d{4}$/; // (99) 99999-9999
+
+    return phonePattern.test(input);
+  };
+  const validateEmail = (email) => {
+    // Lógica de validação de email (pode ser uma expressão regular)
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validateCpf = (cpf) => {
+    // Lógica de validação de CPF (pode ser uma expressão regular ou outro método)
+    return /^(\d{3}\.){2}\d{3}-\d{2}$/.test(cpf);
+  };
+
   return (
     <div style={{ background: '#EDEDEE', height: '130vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '-5rem', marginTop:'-15rem'}}>
@@ -82,42 +114,155 @@ const CadastroScreen = () => {
           <h1 style={{ color: '#393C47', textAlign:'left'}}>Cadastro</h1>
           <div className="label">Nome:</div>
           <div className="input-wrapper">
-            <input type="text" value={nome} onChange={handleNomeChange} className="input-field" />
+            <input
+              type="text"
+              value={nome}
+              onChange={handleNomeChange}
+              className="input-field"
+              style={{ border: isNomeValid ? 'none' : '2px solid red' }}
+            />
           </div>
+          {!isNomeValid && (
+            <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
+              Nome deve ter no mínimo 4 caracteres.
+            </div>
+          )}
           <div className="label">Email:</div>
           <div className="input-wrapper">
-            <input type="email" value={email} onChange={handleEmailChange} className="input-field" />
+            <input
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              className="input-field"
+              style={{ border: isEmailValid ? 'none' : '2px solid red' }}
+            />
           </div>
+          {!isEmailValid && (
+            <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
+              Email inválido.
+            </div>
+          )}
           <div className="label">CPF:</div>
           <div className="input-wrapper">
-            <input type="text" value={cpf} onChange={handleCpfChange} className="input-field" />
+            <InputMask
+              mask="999.999.999-99"
+              value={cpf}
+              onChange={handleCpfChange}
+              className="input-field"
+              style={{
+                border: isCpfValid ? 'none' : '2px solid red',
+              }}
+            />
           </div>
+          {!isCpfValid && (
+            <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
+              CPF inválido.
+            </div>
+          )}
+
           <div className="label">WhatsApp:</div>
           <div className="input-wrapper">
-            <input type="text" value={whatsapp} onChange={handleWhatsappChange} className="input-field" />
+            <InputMask
+              mask="(99) 99999-9999"
+              value={whatsapp}
+              onChange={handleWhatsappChange}
+              className="input-field"
+              style={{
+                border: isWhatsappValid ? 'none' : '2px solid red',
+              }}
+            />
           </div>
+          {!isWhatsappValid && (
+            <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
+              WhatsApp inválido.
+            </div>
+          )}
           <div className="label">Senha:</div>
-          <div className="input-wrapper">
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem', position: 'relative' }}>
-              <input type={showPassword ? 'text' : 'password'} id="password" value={senha} className="input-field" onChange={handleSenhaChange} style={{ flex: '1', marginRight: '0.5rem', paddingRight: '12rem', maxWidth: '100%', backgroundColor: '#e9e9e9', border: 'none', height: '2rem', borderRadius: '5%', fontSize: '16px' }} />
-              {showPassword ? (
-                <FaEye onClick={handleShowPassword} style={eyeIconStyle} />
-              ) : (
-                <FaEyeSlash onClick={handleShowPassword} style={eyeIconStyle} />
-              )}
-            </div>
-          </div>
-          <div className="label">Confirmar Senha:</div>
-          <div className="input-wrapper">
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem', position: 'relative' }}>
-                <input type={showPasswordConfirm ? 'text' : 'password'} id="password" value={confirmarSenha} className="input-field" onChange={handleConfirmarSenhaChange} style={{ flex: '1', marginRight: '0.5rem', paddingRight: '12rem', maxWidth: '100%', backgroundColor: '#e9e9e9', border: 'none', height: '2rem', borderRadius: '5%', fontSize: '16px' }} />
-                {showPasswordConfirm ? (
-                  <FaEye onClick={handleShowPasswordConfirm} style={eyeIconStyle} />
+            <div className="input-wrapper">
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  value={senha}
+                  className="input-field"
+                  onChange={handleSenhaChange}
+                  style={{
+                    flex: '1',
+                    marginRight: '0.5rem',
+                    paddingRight: '3rem',
+                    maxWidth: '100%',
+                    backgroundColor: '#e9e9e9',
+                    border: isSenhaValid ? 'none' : '2px solid red',
+                    height: '2rem',
+                    borderRadius: '5%',
+                    fontSize: '16px'
+                  }}
+                />
+                {showPassword ? (
+                  <FaEye
+                    onClick={handleShowPassword}
+                    style={{
+                      ...eyeIconStyle,
+                      right: '0.5rem'
+                    }}
+                  />
                 ) : (
-                  <FaEyeSlash onClick={handleShowPasswordConfirm} style={eyeIconStyle} />
+                  <FaEyeSlash
+                    onClick={handleShowPassword}
+                    style={{
+                      ...eyeIconStyle,
+                      right: '0.5rem'
+                    }}
+                  />
                 )}
+              </div>
             </div>
-          </div>
+          {!isSenhaValid && (
+            <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
+              Senha muito curta (mínimo 6 caracteres).
+            </div>
+          )}
+
+        <div className="label">Confirmar Senha:</div>
+  <div className="input-wrapper">
+    <div style={{ position: 'relative' }}>
+      <input
+        type={showPasswordConfirm ? 'text' : 'password'}
+        id="confirmarSenha"
+        value={confirmarSenha}
+        className="input-field"
+        onChange={handleConfirmarSenhaChange}
+        style={{
+          flex: '1',
+          marginRight: '0.5rem',
+          paddingRight: '3rem',
+          maxWidth: '100%',
+          backgroundColor: '#e9e9e9',
+          border: 'none',
+          height: '2rem',
+          borderRadius: '5%',
+          fontSize: '16px'
+        }}
+      />
+      {showPasswordConfirm ? (
+        <FaEye
+          onClick={handleShowPasswordConfirm}
+          style={{
+            ...eyeIconStyle,
+            right: '0.5rem'
+          }}
+        />
+      ) : (
+        <FaEyeSlash
+          onClick={handleShowPasswordConfirm}
+          style={{
+            ...eyeIconStyle,
+            right: '0.5rem'
+          }}
+        />
+      )}
+    </div>
+  </div>
         </div>
         {/* Segunda coluna */}
         <div style={{ flex: 1, marginLeft: '1rem', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop:'80px'}}>
