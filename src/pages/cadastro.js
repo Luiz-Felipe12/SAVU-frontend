@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import InputMask from 'react-input-mask';
 import './login.css';
@@ -20,6 +20,48 @@ const CadastroScreen = () => {
   const [isNomeValid, setIsNomeValid] = useState(true);
   const [isCpfValid, setIsCpfValid] = useState(true);
   const [isWhatsappValid, setIsWhatsappValid] = useState(true);
+  const [isEmptyFieldsError, setIsEmptyFieldsError] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleCadastro = () => {
+    if (
+      nome === '' ||
+      email === '' ||
+      cpf === '' ||
+      whatsapp === '' ||
+      senha === '' ||
+      confirmarSenha === ''
+    ) {
+      alert('Preencha todos os campos obrigatórios.');
+    } else {
+
+      if (isEmailValid === true &&
+        isSenhaValid === true &&
+        isNomeValid === true &&
+        isCpfValid === true &&
+        isWhatsappValid === true) {
+
+        if (senha !== confirmarSenha) {
+          alert('As senhas não coincidem. Por favor, verifique.');
+        } else {
+          navigate('/home')
+        }
+
+      }
+
+      // Lógica para cadastro do usuário
+      console.log('Nome:', nome);
+      console.log('Email:', email);
+      console.log('CPF:', cpf);
+      console.log('WhatsApp:', whatsapp);
+      console.log('Senha:', senha);
+      console.log('Confirmar Senha:', confirmarSenha);
+      console.log('Tipo de Usuário:', tipoUsuario);
+
+      // Aqui você pode adicionar a navegação para outra tela se desejar
+    }
+  }
 
   const eyeIconStyle = {
     position: 'absolute',
@@ -75,17 +117,6 @@ const CadastroScreen = () => {
     setTipoUsuario(e.target.value);
   };
 
-  const handleCadastro = () => {
-    // Lógica para cadastro do usuário
-    console.log('Nome:', nome);
-    console.log('Email:', email);
-    console.log('CPF:', cpf);
-    console.log('WhatsApp:', whatsapp);
-    console.log('Senha:', senha);
-    console.log('Confirmar Senha:', confirmarSenha);
-    console.log('Tipo de Usuário:', tipoUsuario);
-  };
-
   const validateWhatsapp = (input) => {
     const phonePattern = /^\(\d{2}\)\s\d{5}-\d{4}$/; // (99) 99999-9999
 
@@ -102,16 +133,16 @@ const CadastroScreen = () => {
   };
 
   return (
-    <div style={{ background: '#EDEDEE', height: '130vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '-5rem', marginTop:'-15rem'}}>
-        <h1 style={{ color: '#393C47', fontSize: '70px', marginLeft: '2rem',marginTop: '4rem', }}>SAVU</h1>
+    <div style={{ background: '#EDEDEE', height: '130vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '-5rem', marginTop: '-15rem' }}>
+        <h1 style={{ color: '#393C47', fontSize: '70px', marginLeft: '2rem', marginTop: '4rem', }}>SAVU</h1>
         <img src="/imgs/logo.png" alt="Logo" style={{ width: '100px', marginTop: '1rem', marginLeft: '1rem' }} />
       </div>
-      <h2 style={{ marginTop: '4rem', color: '#393C47', paddingBottom:'10px', paddingTop:'15px' }}>Sistema de Agendamento de Visitas à UFAPE</h2>
+      <h2 style={{ marginTop: '4rem', color: '#393C47', paddingBottom: '10px', paddingTop: '15px' }}>Sistema de Agendamento de Visitas à UFAPE</h2>
       <div style={{ background: 'white', padding: '2rem', marginTop: '0.3rem', width: '800px', display: 'flex', justifyContent: 'space-between', borderRadius: '8%', boxshadow: '0px 4px 10px rgba(0, 0, 0, 0.1)' }}>
         {/* Primeira coluna */}
         <div style={{ flex: 1, marginRight: '1rem', textAlign: 'center' }}>
-          <h1 style={{ color: '#393C47', textAlign:'left'}}>Cadastro</h1>
+          <h1 style={{ color: '#393C47', textAlign: 'left' }}>Cadastro</h1>
           <div className="label">Nome:</div>
           <div className="input-wrapper">
             <input
@@ -178,94 +209,94 @@ const CadastroScreen = () => {
             </div>
           )}
           <div className="label">Senha:</div>
-            <div className="input-wrapper">
-              <div style={{ position: 'relative' }}>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={senha}
-                  className="input-field"
-                  onChange={handleSenhaChange}
+          <div className="input-wrapper">
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={senha}
+                className="input-field"
+                onChange={handleSenhaChange}
+                style={{
+                  flex: '1',
+                  marginRight: '0.5rem',
+                  paddingRight: '3rem',
+                  maxWidth: '100%',
+                  backgroundColor: '#e9e9e9',
+                  border: isSenhaValid ? 'none' : '2px solid red',
+                  height: '2rem',
+                  borderRadius: '5%',
+                  fontSize: '16px'
+                }}
+              />
+              {showPassword ? (
+                <FaEye
+                  onClick={handleShowPassword}
                   style={{
-                    flex: '1',
-                    marginRight: '0.5rem',
-                    paddingRight: '3rem',
-                    maxWidth: '100%',
-                    backgroundColor: '#e9e9e9',
-                    border: isSenhaValid ? 'none' : '2px solid red',
-                    height: '2rem',
-                    borderRadius: '5%',
-                    fontSize: '16px'
+                    ...eyeIconStyle,
+                    right: '0.5rem'
                   }}
                 />
-                {showPassword ? (
-                  <FaEye
-                    onClick={handleShowPassword}
-                    style={{
-                      ...eyeIconStyle,
-                      right: '0.5rem'
-                    }}
-                  />
-                ) : (
-                  <FaEyeSlash
-                    onClick={handleShowPassword}
-                    style={{
-                      ...eyeIconStyle,
-                      right: '0.5rem'
-                    }}
-                  />
-                )}
-              </div>
+              ) : (
+                <FaEyeSlash
+                  onClick={handleShowPassword}
+                  style={{
+                    ...eyeIconStyle,
+                    right: '0.5rem'
+                  }}
+                />
+              )}
             </div>
+          </div>
           {!isSenhaValid && (
             <div style={{ color: 'red', fontSize: '14px', textAlign: 'left', marginBottom: '0.5rem' }}>
               Senha muito curta (mínimo 6 caracteres).
             </div>
           )}
 
-        <div className="label">Confirmar Senha:</div>
-  <div className="input-wrapper">
-    <div style={{ position: 'relative' }}>
-      <input
-        type={showPasswordConfirm ? 'text' : 'password'}
-        id="confirmarSenha"
-        value={confirmarSenha}
-        className="input-field"
-        onChange={handleConfirmarSenhaChange}
-        style={{
-          flex: '1',
-          marginRight: '0.5rem',
-          paddingRight: '3rem',
-          maxWidth: '100%',
-          backgroundColor: '#e9e9e9',
-          border: 'none',
-          height: '2rem',
-          borderRadius: '5%',
-          fontSize: '16px'
-        }}
-      />
-      {showPasswordConfirm ? (
-        <FaEye
-          onClick={handleShowPasswordConfirm}
-          style={{
-            ...eyeIconStyle,
-            right: '0.5rem'
-          }}
-        />
-      ) : (
-        <FaEyeSlash
-          onClick={handleShowPasswordConfirm}
-          style={{
-            ...eyeIconStyle,
-            right: '0.5rem'
-          }}
-        />
-      )}
-    </div>
-  </div>
+          <div className="label">Confirmar Senha:</div>
+          <div className="input-wrapper">
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPasswordConfirm ? 'text' : 'password'}
+                id="confirmarSenha"
+                value={confirmarSenha}
+                className="input-field"
+                onChange={handleConfirmarSenhaChange}
+                style={{
+                  flex: '1',
+                  marginRight: '0.5rem',
+                  paddingRight: '3rem',
+                  maxWidth: '100%',
+                  backgroundColor: '#e9e9e9',
+                  border: 'none',
+                  height: '2rem',
+                  borderRadius: '5%',
+                  fontSize: '16px'
+                }}
+              />
+              {showPasswordConfirm ? (
+                <FaEye
+                  onClick={handleShowPasswordConfirm}
+                  style={{
+                    ...eyeIconStyle,
+                    right: '0.5rem'
+                  }}
+                />
+              ) : (
+                <FaEyeSlash
+                  onClick={handleShowPasswordConfirm}
+                  style={{
+                    ...eyeIconStyle,
+                    right: '0.5rem'
+                  }}
+                />
+              )}
+            </div>
+          </div>
         </div>
         {/* Segunda coluna */}
-        <div style={{ flex: 1, marginLeft: '1rem', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop:'80px'}}>
+        <div style={{ flex: 1, width: '300px', marginLeft: '1rem', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: '80px' }}>
           <div style={{ textAlign: 'left', width: '100%' }}>
             <div className="label">Tipo de Usuário:</div>
             <div className="select-wrapper">
@@ -275,15 +306,15 @@ const CadastroScreen = () => {
               </select>
             </div>
           </div>
-          <div className="login-buttons" style={{paddingLeft:'120px'}}>
+          <div className="login-buttons" style={{ marginTop: 'auto', textAlign: 'right' }}>
             <Link to="/" className="button button-cancel link-no-underline">Cancelar</Link>
-            <Link to="/cadastro" className="button button-login link-no-underline" onClick={handleCadastro}>Confirmar</Link>
+            <button className="button button-login link-no-underline" onClick={handleCadastro}>Confirmar</button>
           </div>
         </div>
       </div>
     </div>
   );
-  
+
 };
 
 export default CadastroScreen;

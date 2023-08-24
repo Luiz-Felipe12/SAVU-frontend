@@ -9,6 +9,7 @@ import DescricaoScreen from './pages/descricao';
 import PrincipalAdmScreen from './pages/principalAdm';
 import DescricaoAdmScreen from './pages/descricaoAdm';
 import PrincipalProfScreen from './pages/principalProf';
+import ContaScreen from './pages/conta';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path='/homeprof' element={<PrincipalProfScreen/>} />
           <Route path='/tipo' element={<DescricaoScreen/>} />
           <Route path='/tipoAdm' element={<DescricaoAdmScreen/>} />
+          <Route path='/conta' element={<ContaScreen/>} />
         </Routes>
         
     </Router>
