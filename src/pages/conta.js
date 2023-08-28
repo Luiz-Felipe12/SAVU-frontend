@@ -193,7 +193,6 @@ const ContaScreen = () => {
                                 WhatsApp inválido.
                             </div>
                         )}
-
                         <div className="login-buttons" style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
                             <Link to="/" className="button button-cancel link-no-underline">Cancelar</Link>
                             <Link to="/cadastro" className="button button-login link-no-underline" onClick={handleCadastro}>Atualizar</Link>
