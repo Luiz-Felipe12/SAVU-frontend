@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FaBars, FaUser, FaBuilding, FaPlus, FaImage  } from 'react-icons/fa';
+import { FaBars, FaUser, FaBuilding, FaPlus, FaImage } from 'react-icons/fa';
 import { Container, Row, Col, Carousel, Modal, Button } from 'react-bootstrap';
 import InputMask from 'react-input-mask';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css';
 import './scroll.css';
+import TopBarAdm from '../components/topBarAdm';
 
 const DescricaoAdmScreen = () => {
   const [showModal, setShowModal] = useState(false);
@@ -59,15 +60,7 @@ const DescricaoAdmScreen = () => {
   return (
     <div style={{ background: '#EDEDEE', minHeight: '100vh', paddingBottom: '2rem' }}>
       {/* Top Bar */}
-      <div style={{ background: '#2e3039', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaBars style={{ marginRight: '1rem', cursor: 'pointer' }} />
-        </div>
-        <h2 style={{ margin: 0 }}>SAVU</h2>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaUser style={{ marginRight: '1rem' }} />
-        </div>
-      </div>
+      <TopBarAdm />
 
       {/* Conteúdo Principal */}
       <Container style={{ padding: '2rem' }} className="custom-carousel">
@@ -127,11 +120,11 @@ const DescricaoAdmScreen = () => {
             <label>Descrição:</label>
             <textarea className="custom-input" rows="4"></textarea>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', marginBottom:'0.8rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '0.8rem' }}>
             <label style={{ marginBottom: '0.5rem' }}>Imagens:</label>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label htmlFor="image-input" className="add-image-button">
-                <FaImage  style={{ marginRight: '0.2rem', marginBottom:'0.3rem', marginLeft:'0.2rem' }} />
+                <FaImage style={{ marginRight: '0.2rem', marginBottom: '0.3rem', marginLeft: '0.2rem' }} />
               </label>
               <input
                 id="image-input"

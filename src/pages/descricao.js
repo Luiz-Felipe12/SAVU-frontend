@@ -4,6 +4,7 @@ import { Container, Row, Col, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css';
 import './scroll.css';
+import TopBar from '../components/topBar';
 
 const DescricaoScreen = () => {
 
@@ -38,15 +39,7 @@ const DescricaoScreen = () => {
   return (
     <div style={{ background: '#EDEDEE', minHeight: '100vh', paddingBottom: '2rem' }}>
       {/* Top Bar */}
-      <div style={{ background: '#2e3039', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaBars style={{ marginRight: '1rem', cursor: 'pointer' }} />
-        </div>
-        <h2 style={{ margin: 0 }}>SAVU</h2>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FaUser style={{ marginRight: '1rem' }} />
-        </div>
-      </div>
+      <TopBar />
 
       {/* Conteúdo Principal */}
       <Container style={{ padding: '2rem' }} className="custom-carousel">
@@ -65,7 +58,7 @@ const DescricaoScreen = () => {
         <Row style={{ marginTop: '2rem' }}>
           {visitas.map((visita, index) => (
             <Col key={index} xs={12} md={6} style={{ marginBottom: '2rem' }}>
-              <h2 style={{fontWeight: 'bold',}}>{visita.titulo}</h2>
+              <h2 style={{ fontWeight: 'bold', }}>{visita.titulo}</h2>
               <p>{visita.descricao}</p>
               <p style={{ fontWeight: 'bold', fontSize: '18px' }}>Tempo de duração: <span style={{ fontWeight: 'normal', fontSize: 'inherit' }}>{visita.duracao}</span></p>
               <Carousel>
